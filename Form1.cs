@@ -49,7 +49,11 @@ namespace slau {
     double[] resultSlau;
 
     private void button1_Click(object sender, EventArgs e) {
-      countX = int.Parse(textBoxN.Text);
+      try {
+        countX = int.Parse(textBoxN.Text);
+      } catch {
+        return;
+      }
 
       DeleteElement();
 
@@ -201,15 +205,35 @@ namespace slau {
 
       if (checkBox1.Checked) {
         double[] resultKramer = SlauMethod.MethodKramer(matrix, resultSlau, countX);
-        PrintResult(resultKramer, panel2);
+        try {
+          PrintResult(resultKramer, panel2);
+        } catch (Exception ex) {
+          MessageBox.Show(ex.Message);
+
+          return;
+        }
       }
       if (checkBox2.Checked) {
         double[] resultGauss = SlauMethod.MethodGauss(matrix, resultSlau, countX);
-        PrintResult(resultGauss, panel3);
+
+        try {
+          PrintResult(resultGauss, panel2);
+        } catch (Exception ex) {
+          MessageBox.Show(ex.Message);
+
+          return;
+        }
       } 
       if (checkBox3.Checked) {
         double[] resultGaussJordan = SlauMethod.MethodGaussJordan(matrix, resultSlau, countX);
-        PrintResult(resultGaussJordan, panel4);
+        
+        try {
+          PrintResult(resultGaussJordan, panel2);
+        } catch (Exception ex) {
+          MessageBox.Show(ex.Message);
+
+          return;
+        }
       }
     }
 
